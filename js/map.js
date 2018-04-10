@@ -51,7 +51,7 @@ var generateAds = function (count) {
     var temporaryValue;
     var randomIndex;
 
-    while (0 !== currentIndex) {
+    while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
 
@@ -61,7 +61,7 @@ var generateAds = function (count) {
     }
 
     return photosData;
-  }
+  };
 
   var getAvatarSrc = function (number) {
     var avatarNumber = '0' + number;
@@ -88,13 +88,13 @@ var generateAds = function (count) {
     ad.author = {
       avatar: getAvatarSrc(currentNumber)
     };
-    ad.location =  {
+    ad.location = {
       x: getRandomInt(300, 900),
       y: getRandomInt(150, 500)
     };
     ad.offer = {
       title: titleData[currentNumber - 1],
-      adress: ad.location.x + ", " + ad.location.y,
+      adress: ad.location.x + ', ' + ad.location.y,
       price: getRandomInt(1000, 1000000),
       type: getRandomData(typeData),
       rooms: getRandomInt(1, 5),
@@ -127,8 +127,8 @@ var renderPins = function (elem) {
   var pinElement = pinTemplate.cloneNode(true);
   var pinImage = pinElement.querySelector('img');
 
-  pinElement.style.left = elem.location.x + (pinElement.clientWidth / 2) + "px";
-  pinElement.style.top = elem.location.y - pinElement.clientHeight + "px";
+  pinElement.style.left = elem.location.x + (pinElement.clientWidth / 2) + 'px';
+  pinElement.style.top = elem.location.y - pinElement.clientHeight + 'px';
 
   pinImage.src = elem.author.avatar;
   pinImage.alt = elem.offer.title;
