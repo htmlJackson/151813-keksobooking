@@ -67,7 +67,7 @@ var ADS_COUNT = 8;
 /**
   * Генерация случайного числа в заданном диапазоне
   * @param {number} min - начало диапазона
-  * @param {number} max - конеч диапазона
+  * @param {number} max - конец диапазона
   * @return {number} - случайное число
 */
 var getRandomInt = function (min, max) {
@@ -117,7 +117,7 @@ var getRandomElems = function (array) {
   var resultArray = [];
 
   for (var i = 0; i <= count; i++) {
-    resultArray.push(array[i]);
+    resultArray.push(randomArray[i]);
   }
   return resultArray;
 };
