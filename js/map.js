@@ -64,6 +64,8 @@ var MAX_COORDS_Y = 500;
 
 var ADS_COUNT = 8;
 
+var SHARP_END_HEIGHT = 22;
+
 /**
   * Генерация случайного числа в заданном диапазоне
   * @param {number} min - начало диапазона
@@ -232,4 +234,41 @@ pinsList.appendChild(renderPins(adsDataArray));
 var card = renderPopup(adsDataArray[0]);
 document.querySelector('.map').insertBefore(card, document.querySelector('.map__filters-container'));
 
-document.querySelector('.map').classList.remove('map--faded');
+//document.querySelector('.map').classList.remove('map--faded');
+
+//
+var mapSection = document.querySelector('.map');
+var adForm = document.querySelector('.ad-form');
+var fieldsetCollection = adForm.querySelectorAll('fieldset');
+var mainPin = document.querySelector('.map__pin--main');
+var addressInput = adForm.querySelector('#address');
+
+var enablePage = function () {
+  mapSection.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  for (var i = 0; i < fieldsetCollection.length; i++) {
+    fieldsetCollection[i].disabled = false;
+  }
+};
+
+var disablePage = function () {
+  mapSection.classList.add('map--faded');
+  adForm.classList.add('ad-form--disabled');
+  for (var i = 0; i < fieldsetCollection.length; i++) {
+    fieldsetCollection[i].disabled = true;
+  }
+};
+
+var setAddress = function () {
+  var left = parseInt(mainPin.style.left);
+  var top = parseInt(mainPin.style.top);
+  var coordsX = left + Math.round(mainPin.clientWidth / 2);
+  var coordsY = top - mainPin.clientHeight - SHARP_END_HEIGHT;
+  var address = coordsX + ", " + coordsY;
+  addressInput.value = address;
+};
+
+disablePage();
+
+mainPin.addEventListener('mouseup', enablePage);
+mainPin.addEventListener('mouseup', setAddress);
