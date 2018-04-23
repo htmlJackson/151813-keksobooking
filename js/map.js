@@ -49,12 +49,18 @@ var PHOTOS_DATA = [
 var MIN_PRICE = 1000;
 var MAX_PRICE = 1000000;
 
+var MIN_PRICE_DATA = {
+  flat: 1000,
+  bungalo: 0,
+  house: 5000,
+  palace: 10000
+};
+
 var MIN_ROOMS = 1;
 var MAX_ROOMS = 5;
 
 var MIN_GUESTS = MIN_ROOMS * 2;
 var MAX_GUESTS = MAX_ROOMS * 2;
-
 
 var MIN_COORDS_X = 300;
 var MAX_COORDS_X = 900;
@@ -63,6 +69,13 @@ var MIN_COORDS_Y = 150;
 var MAX_COORDS_Y = 500;
 
 var ADS_COUNT = 8;
+
+var GUESTS_VALIDATE_DATA = {
+  '1': ['1'],
+  '2': ['1','2'],
+  '3': ['1','2','3'],
+  '100': ['0']
+};
 
 /**
   * Генерация случайного числа в заданном диапазоне
@@ -233,3 +246,45 @@ var card = renderPopup(adsDataArray[0]);
 document.querySelector('.map').insertBefore(card, document.querySelector('.map__filters-container'));
 
 document.querySelector('.map').classList.remove('map--faded');
+
+//
+
+/**
+  * Валидация соответствия количества комнат и гостей
+*/
+var validateGuests = function () {
+  var roomValue = selectRoomNumber.value;
+  var capacityValue = selectCapacity.value;
+  var capacityArray = GUESTS_VALIDATE_DATA[roomValue];
+
+  selectRoomNumber.setCustomValidity('');
+  if (capacityArray.indexOf(capacityValue) < 0) {
+    selectRoomNumber.setCustomValidity('Количество комнат не подходит для количества гостей');
+  }
+};
+
+var selectType = document.querySelector('select#type');
+var inputPrice = document.querySelector('input#price');
+
+selectType.addEventListener('change', function () {
+  var value = selectType.value;
+  inputPrice.min = MIN_PRICE_DATA[value];
+  inputPrice.placeholder = MIN_PRICE_DATA[value];
+});
+
+var selectTimeIn = document.querySelector('select#timein');
+var selectTimeOut = document.querySelector('select#timeout');
+
+selectTimeIn.addEventListener('change', function () {
+  selectTimeOut.value = selectTimeIn.value;
+});
+
+selectTimeOut.addEventListener('change', function () {
+  selectTimeIn.value = selectTimeOut.value;
+});
+
+var selectRoomNumber = document.querySelector('select#room_number');
+var selectCapacity = document.querySelector('select#capacity');
+
+selectRoomNumber.addEventListener('change', validateGuests);
+selectCapacity.addEventListener('change', validateGuests);
