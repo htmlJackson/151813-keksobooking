@@ -64,6 +64,9 @@ var MAX_COORDS_Y = 500;
 
 var ADS_COUNT = 8;
 
+var SHARP_END_HEIGHT = 22;
+
+var ESC_KEYCODE = 27;
 /**
   * Генерация случайного числа в заданном диапазоне
   * @param {number} min - начало диапазона
@@ -173,7 +176,7 @@ var renderPins = function (dataArray) {
   for (var i = 0; i < dataArray.length; i++) {
     var pinElement = pinTemplate.cloneNode(true);
     var pinImage = pinElement.querySelector('img');
-
+    pinElement.dataset.id = i;
     pinElement.style.left = dataArray[i].location.x + (pinElement.clientWidth / 2) + 'px';
     pinElement.style.top = dataArray[i].location.y - pinElement.clientHeight + 'px';
     pinImage.src = dataArray[i].author.avatar;
@@ -229,7 +232,105 @@ var adsDataArray = generateAdsData(ADS_COUNT);
 var pinsList = document.querySelector('.map__pins');
 pinsList.appendChild(renderPins(adsDataArray));
 
+var mapSection = document.querySelector('.map');
 var card = renderPopup(adsDataArray[0]);
 document.querySelector('.map').insertBefore(card, document.querySelector('.map__filters-container'));
 
-document.querySelector('.map').classList.remove('map--faded');
+var adForm = document.querySelector('.ad-form');
+var fieldsetCollection = adForm.querySelectorAll('fieldset');
+var mainPin = document.querySelector('.map__pin--main');
+var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+var addressInput = adForm.querySelector('#address');
+var popup = document.querySelector('.map__card.popup');
+
+/**
+  * Открытие модального окна
+*/
+var openPopup = function () {
+  popup.style.display = 'block';
+};
+
+/**
+  * Закрытие модального окна
+*/
+var closePopup = function () {
+  popup.style.display = 'none';
+};
+
+/**
+  * Изменение модального окна
+*/
+var changePopup = function (evt) {
+  evt.preventDefault();
+  var targetId = this.dataset.id;
+  var changedPopup = renderPopup(adsDataArray[targetId]);
+  popup.innerHTML = changedPopup.innerHTML;
+  var popupCloser = popup.querySelector('.popup__close');
+  popupCloser.addEventListener('click', closePopup);
+};
+
+/**
+  * Нажатие на кнопки клавиатуры
+*/
+var documentKeydownHandler = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+    console.log("ESC");
+  }
+};
+
+/**
+  * Активация страницы
+*/
+var enablePage = function () {
+  mapSection.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+
+  for (var i = 0; i < fieldsetCollection.length; i++) {
+    fieldsetCollection[i].disabled = true;
+  }
+
+  for (var j = 0; j < pins.length; j++) {
+    pins[j].style.display = 'block';
+    pins[j].addEventListener('click', changePopup);
+    pins[j].addEventListener('click', openPopup);
+  }
+
+  document.addEventListener('keydown', documentKeydownHandler);
+};
+
+/**
+  * Отключение страницы
+*/
+var disablePage = function () {
+  mapSection.classList.add('map--faded');
+  adForm.classList.add('ad-form--disabled');
+
+  for (var i = 0; i < fieldsetCollection.length; i++) {
+    fieldsetCollection[i].disabled = true;
+  }
+
+  for (var j = 0; j < pins.length; j++) {
+    pins[j].style.display = 'none';
+  }
+
+  closePopup();
+  document.removeEventListener('keydown', documentKeydownHandler);
+};
+
+/**
+  * Установка адреса относительно текущих координат главного пина
+*/
+var setAddress = function () {
+  var left = parseInt(mainPin.style.left);
+  var top = parseInt(mainPin.style.top);
+  var coordsX = left + Math.round(mainPin.clientWidth / 2);
+  var coordsY = top - mainPin.clientHeight - SHARP_END_HEIGHT;
+  var address = coordsX + ", " + coordsY;
+  addressInput.value = address;
+};
+
+disablePage();
+setAddress();
+mainPin.addEventListener('mouseup', enablePage);
+mainPin.addEventListener('mouseup', setAddress);
