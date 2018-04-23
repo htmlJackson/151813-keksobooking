@@ -259,10 +259,12 @@ var closePopup = function () {
 
 /**
   * Изменение модального окна
+  * @param {Object} evt - объект события
 */
 var changePopup = function (evt) {
   evt.preventDefault();
-  var targetId = this.dataset.id;
+  var target = this;
+  var targetId = target.dataset.id;
   var changedPopup = renderPopup(adsDataArray[targetId]);
   popup.innerHTML = changedPopup.innerHTML;
   var popupCloser = popup.querySelector('.popup__close');
@@ -271,11 +273,11 @@ var changePopup = function (evt) {
 
 /**
   * Нажатие на кнопки клавиатуры
+  * @param {Object} evt - объект события
 */
 var documentKeydownHandler = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
     closePopup();
-    console.log("ESC");
   }
 };
 
@@ -322,11 +324,11 @@ var disablePage = function () {
   * Установка адреса относительно текущих координат главного пина
 */
 var setAddress = function () {
-  var left = parseInt(mainPin.style.left);
-  var top = parseInt(mainPin.style.top);
+  var left = parseInt(mainPin.style.left, 10);
+  var top = parseInt(mainPin.style.top, 10);
   var coordsX = left + Math.round(mainPin.clientWidth / 2);
   var coordsY = top - mainPin.clientHeight - SHARP_END_HEIGHT;
-  var address = coordsX + ", " + coordsY;
+  var address = coordsX + ', ' + coordsY;
   addressInput.value = address;
 };
 
