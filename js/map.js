@@ -266,7 +266,7 @@ var changePopup = function (evt) {
   var target = evt.target;
   var targetId;
 
-  if (target.tagName == 'IMG') {
+  if (target.tagName === 'IMG') {
     targetId = target.parentNode.dataset.id;
   } else {
     targetId = target.dataset.id;
