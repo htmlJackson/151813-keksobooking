@@ -263,11 +263,19 @@ var closePopup = function () {
 */
 var changePopup = function (evt) {
   evt.preventDefault();
-  var target = this;
-  var targetId = target.dataset.id;
+  var target = evt.target;
+  var targetId;
+
+  if (target.tagName == 'IMG') {
+    targetId = target.parentNode.dataset.id;
+  } else {
+    targetId = target.dataset.id;
+  }
+
   var changedPopup = renderPopup(adsDataArray[targetId]);
-  popup.innerHTML = changedPopup.innerHTML;
   var popupCloser = popup.querySelector('.popup__close');
+
+  popup.innerHTML = changedPopup.innerHTML;
   popupCloser.addEventListener('click', closePopup);
 };
 
@@ -289,7 +297,7 @@ var enablePage = function () {
   adForm.classList.remove('ad-form--disabled');
 
   for (var i = 0; i < fieldsetCollection.length; i++) {
-    fieldsetCollection[i].disabled = true;
+    fieldsetCollection[i].disabled = false;
   }
 
   for (var j = 0; j < pins.length; j++) {
