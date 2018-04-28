@@ -223,7 +223,7 @@ var renderPopup = function () {
   * Изменение содержимого карточки-popup
   * @param {Object} popup - popup на странице
   * @param {Object} dataObject - объект данных
-  * @return {}
+  * @return {Object} - измененная карточка
 */
 var fillPopup = function (popup, dataObject) {
   var popupPhotos = popup.querySelector('.popup__photos');
@@ -256,10 +256,13 @@ var fillPopup = function (popup, dataObject) {
   }
 
   popup.querySelector('.popup__avatar').src = dataObject.author.avatar;
+
+  return popup;
 };
 
 /**
   * Обработчик клика на пине
+  * @param {Object} evt - объект события
 */
 var pinClickHandler = function (evt) {
   evt.preventDefault();
@@ -278,6 +281,7 @@ var pinClickHandler = function (evt) {
 
 /**
   * Крестик закрытия
+  * @param {Object} evt - объект события
 */
 var popupCloserClickHandler = function (evt) {
   evt.preventDefault();
@@ -328,7 +332,7 @@ var documentKeydownHandler = function (evt) {
   }
 };
 
-var mainpinMouseupHandler = function (evt) {
+var mainpinMouseupHandler = function () {
   enablePage();
   mainPin.removeEventListener('mouseup', mainpinMouseupHandler);
 };
@@ -388,8 +392,6 @@ disablePage();
 
 mainPin.addEventListener('mouseup', mainpinMouseupHandler);
 
-//
-
 /**
   * Изменение селекта
 */
@@ -401,7 +403,7 @@ var selectChangeHandler = function () {
   * Валидация соответствия количества комнат и гостей
 */
 var validateGuests = function () {
-  var roomValue =  selectRoomNumber.value;
+  var roomValue = selectRoomNumber.value;
   var capacityValue = selectCapacity.value;
   var capacityArray = GUESTS_VALIDATE_DATA[roomValue];
   selectRoomNumber.setCustomValidity('');
