@@ -446,14 +446,14 @@ var addDragPin = function () {
       mainPin.style.left = moveCoords.x + 'px';
     };
 
-    var mouseUpHandler = function (upEvt) {
+    var mouseUpHandler = function(upEvt) {
       upEvt.preventDefault();
 
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
 
       setAddress();
-  };
+    };
 
     document.addEventListener('mousemove', mouseMoveHandler);
     document.addEventListener('mouseup', mouseUpHandler);
