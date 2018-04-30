@@ -401,7 +401,6 @@ var setAddress = function () {
   * Добавление перетаскивания главного пина
 */
 var addDragPin = function () {
-
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
     var startCoords = {
@@ -427,13 +426,21 @@ var addDragPin = function () {
         y: mainPin.offsetTop - shift.y
       };
 
-      moveCoords.x = (moveCoords.x < 0) ? 0 :
-      (moveCoords.x > MAX_DRAG_COORDS_X) ? MAX_DRAG_COORDS_X :
-      moveCoords.x;
+      if (moveCoords.x <= 0) {
+        moveCoords.x = 0;
+      }
 
-      moveCoords.y = (moveCoords.y < 0) ? 0 :
-      (moveCoords.y > MAX_DRAG_COORDS_Y) ? MAX_DRAG_COORDS_Y :
-      moveCoords.y;
+      if (moveCoords.x > MAX_DRAG_COORDS_X) {
+        moveCoords.x = MAX_DRAG_COORDS_X;
+      }
+
+      if (moveCoords.y <= 0) {
+        moveCoords.y = 0;
+      }
+
+      if (moveCoords.y > MAX_DRAG_COORDS_Y) {
+        moveCoords.y = MAX_DRAG_COORDS_Y;
+      }
 
       mainPin.style.top = moveCoords.y + 'px';
       mainPin.style.left = moveCoords.x + 'px';
