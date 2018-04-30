@@ -82,9 +82,18 @@ var GUESTS_VALIDATE_DATA = {
   '100': ['0']
 };
 
+var MAIN_PIN_WIDTH = 65;
+var MAIN_PIN_HEIGHT = 65;
 var SHARP_END_HEIGHT = 22; // размер псевдоэлемента-указателя
 
 var ESC_KEYCODE = 27;
+
+var MAP_WIDTH = document.querySelector('.map').offsetWidth;
+var MAP_HEIGHT = document.querySelector('.map').offsetHeight;
+
+var MAX_DRAG_COORDS_X = MAP_WIDTH - MAIN_PIN_WIDTH;
+var MAX_DRAG_COORDS_Y = MAP_HEIGHT - MAIN_PIN_HEIGHT - SHARP_END_HEIGHT - document.querySelector('.map__filters-container').offsetHeight;
+
 /**
   * Генерация случайного числа в заданном диапазоне
   * @param {number} min - начало диапазона
@@ -233,7 +242,7 @@ var fillPopup = function (popup, dataObject) {
   popup.querySelector('.popup__title').textContent = dataObject.offer.title;
   popup.querySelector('.popup__text--address').textContent = dataObject.offer.address;
   popup.querySelector('.popup__text--price').textContent = dataObject.offer.price + '₽/ночь';
-  popup.querySelector('.popup__type').textContent = OFFER_DATA[dataObject.offer.type];
+  popup.querySelector('.popup__type').textContent = OFFER_DATA[dataObject.offer.type].translate;
   popup.querySelector('.popup__text--capacity').textContent = dataObject.offer.rooms + ' комнаты для ' + dataObject.offer.guests + ' гостей';
   popup.querySelector('.popup__text--time').textContent = 'Заезд после ' + dataObject.offer.checkin + ', выезд до ' + dataObject.offer.checkout;
   popup.querySelector('.popup__description').textContent = dataObject.offer.description;
@@ -353,6 +362,7 @@ var enablePage = function () {
     pins[j].style.display = 'block';
   }
 
+  addDragPin();
   setAddress();
   validateGuests();
 };
@@ -381,12 +391,67 @@ var disablePage = function () {
 var setAddress = function () {
   var left = parseInt(mainPin.style.left, 10);
   var top = parseInt(mainPin.style.top, 10);
-  var coordsX = left + Math.round(mainPin.clientWidth / 2);
-  var coordsY = top - mainPin.clientHeight - SHARP_END_HEIGHT;
+  var coordsX = left + Math.round(MAIN_PIN_WIDTH / 2);
+  var coordsY = top + MAIN_PIN_HEIGHT + SHARP_END_HEIGHT;
   var address = coordsX + ', ' + coordsY;
   addressInput.value = address;
 };
 
+/**
+  * Добавление перетаскивания главного пина
+*/
+var addDragPin = function () {
+
+  mainPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var mouseMoveHandler = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      var moveCoords = {
+        x: mainPin.offsetLeft - shift.x,
+        y: mainPin.offsetTop - shift.y
+      };
+
+      moveCoords.x = (moveCoords.x < 0) ? 0 :
+      (moveCoords.x > MAX_DRAG_COORDS_X) ? MAX_DRAG_COORDS_X :
+      moveCoords.x;
+
+      moveCoords.y = (moveCoords.y < 0) ? 0 :
+      (moveCoords.y > MAX_DRAG_COORDS_Y) ? MAX_DRAG_COORDS_Y :
+      moveCoords.y;
+
+      mainPin.style.top = moveCoords.y + 'px';
+      mainPin.style.left = moveCoords.x + 'px';
+    };
+
+    var mouseUpHandler = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', mouseMoveHandler);
+      document.removeEventListener('mouseup', mouseUpHandler);
+
+      setAddress();
+  };
+
+    document.addEventListener('mousemove', mouseMoveHandler);
+    document.addEventListener('mouseup', mouseUpHandler);
+  });
+};
 
 disablePage();
 
