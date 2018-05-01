@@ -2,7 +2,6 @@
 (function () {
   var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
   var pinsFragment = document.createDocumentFragment();
-  
   /**
     * Обработчик клика на пине
     * @param {Object} evt - объект события
@@ -18,8 +17,8 @@
       targetId = target.dataset.id;
     }
 
-    popup.fill(data.adsDataArray[targetId]);
-    popup.open();
+    window.popup.fill(window.data.adsDataArray[targetId]);
+    window.popup.open();
   };
 
   window.pins = {
@@ -44,5 +43,5 @@
 
       return pinsFragment;
     }
-  }
+  };
 })();

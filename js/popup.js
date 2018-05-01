@@ -1,35 +1,33 @@
 'use strict';
 (function () {
+  var ESC_KEYCODE = 27;
+  /**
+    * Нажатие на кнопки клавиатуры
+    * @param {Object} evt - объект события
+  */
+  var documentKeydownHandler = function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      window.popup.close();
+    }
+  };
 
-    var ESC_KEYCODE = 27;
+  /**
+    * Генерация DOM-элемента карточки-popup
+    * @return {Object} - элемент для вставки на страницу
+  */
+  var renderPopup = function () {
+    var popupTemplate = document.querySelector('template').content.querySelector('.map__card');
+    var popupNode = popupTemplate.cloneNode(true);
+    var popupCloser = popupNode.querySelector('.popup__close');
+    popupCloser.addEventListener('click', function (evt) {
+      evt.preventDefault();
+      window.popup.close();
+    });
+    return popupNode;
+  };
 
-    /**
-      * Нажатие на кнопки клавиатуры
-      * @param {Object} evt - объект события
-    */
-    var documentKeydownHandler = function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        popup.close();
-      }
-    };
-
-    /**
-      * Генерация DOM-элемента карточки-popup
-      * @return {Object} - элемент для вставки на страницу
-    */
-    var renderPopup = function () {
-      var popupTemplate = document.querySelector('template').content.querySelector('.map__card');
-      var popupNode = popupTemplate.cloneNode(true);
-      var popupCloser = popupNode.querySelector('.popup__close');
-      popupCloser.addEventListener('click', function (evt) {
-        evt.preventDefault();
-        popup.close();
-      });
-      return popupNode;
-    };
-
-    var card = renderPopup();
-    document.querySelector('.map').insertBefore(card, document.querySelector('.map__filters-container'));
+  var card = renderPopup();
+  document.querySelector('.map').insertBefore(card, document.querySelector('.map__filters-container'));
 
   window.popup = {
     /**
@@ -87,5 +85,5 @@
 
       return card;
     }
-  }
+  };
 })();

@@ -1,5 +1,5 @@
 'use strict';
-(function() {
+(function () {
   var MAIN_PIN_WIDTH = 65;
   var MAIN_PIN_HEIGHT = 65;
   var SHARP_END_HEIGHT = 22; // размер псевдоэлемента-указателя
@@ -11,14 +11,14 @@
   var MAX_DRAG_COORDS_Y = MAP_HEIGHT - MAIN_PIN_HEIGHT - SHARP_END_HEIGHT - document.querySelector('.map__filters-container').offsetHeight;
 
   var pinsList = document.querySelector('.map__pins');
-  pinsList.appendChild(pins.render(data.adsDataArray));
+  pinsList.appendChild(window.pins.render(window.data.adsDataArray));
 
   var mapSection = document.querySelector('.map');
 
-  var fieldsetCollection = form.adForm.querySelectorAll('fieldset');
+  var fieldsetCollection = window.form.adForm.querySelectorAll('fieldset');
   var mainPin = document.querySelector('.map__pin--main');
   var pinsElems = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-  var addressInput = form.adForm.querySelector('#address');
+  var addressInput = window.form.adForm.querySelector('#address');
 
   var mainpinMouseupHandler = function () {
     enablePage();
@@ -30,7 +30,7 @@
   */
   var enablePage = function () {
     mapSection.classList.remove('map--faded');
-    form.adForm.classList.remove('ad-form--disabled');
+    window.form.adForm.classList.remove('ad-form--disabled');
 
     for (var i = 0; i < fieldsetCollection.length; i++) {
       fieldsetCollection[i].disabled = false;
@@ -42,7 +42,7 @@
 
     addDragPin();
     setAddress();
-    form.validateGuests();
+    window.form.validateGuests();
   };
 
   /**
@@ -50,7 +50,7 @@
   */
   var disablePage = function () {
     mapSection.classList.add('map--faded');
-    form.adForm.classList.add('ad-form--disabled');
+    window.form.adForm.classList.add('ad-form--disabled');
 
     for (var i = 0; i < fieldsetCollection.length; i++) {
       fieldsetCollection[i].disabled = true;
@@ -60,7 +60,7 @@
       pinsElems[j].style.display = 'none';
     }
     setAddress();
-    popup.close();
+    window.popup.close();
   };
 
   /**

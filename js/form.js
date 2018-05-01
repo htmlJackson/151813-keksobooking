@@ -30,7 +30,7 @@
     * Изменение селекта
   */
   var selectChangeHandler = function () {
-    form.validateGuests();
+    window.form.validateGuests();
   };
 
   var selectRoomNumber = document.querySelector('select#room_number');
@@ -43,7 +43,6 @@
   var selectTimeOut = document.querySelector('select#timeout');
 
   var adForm = document.querySelector('.ad-form');
-  var inputAddress = adForm.querySelector('#address');
 
   selectType.addEventListener('change', function () {
     var value = selectType.value;
@@ -65,10 +64,9 @@
   window.form = {
     adForm: adForm,
     offerData: OFFER_DATA,
-    
-      /**
-        * Валидация соответствия количества комнат и гостей
-      */
+    /**
+      * Валидация соответствия количества комнат и гостей
+    */
     validateGuests: function () {
       var roomValue = selectRoomNumber.value;
       var capacityValue = selectCapacity.value;
@@ -79,5 +77,5 @@
         selectRoomNumber.setCustomValidity('Количество комнат не подходит для количества гостей');
       }
     }
-  }
+  };
 })();

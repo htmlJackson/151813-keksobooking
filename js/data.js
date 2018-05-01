@@ -63,8 +63,8 @@
   var generateAdsData = function (count) {
     var adArray = [];
     for (var i = 0; i < count; i++) {
-      var coordsX = util.getRandomInt(MIN_COORDS_X, MAX_COORDS_X);
-      var coordsY = util.getRandomInt(MIN_COORDS_Y, MAX_COORDS_Y);
+      var coordsX = window.util.getRandomInt(MIN_COORDS_X, MAX_COORDS_X);
+      var coordsY = window.util.getRandomInt(MIN_COORDS_Y, MAX_COORDS_Y);
 
       var ad = {
         author: {
@@ -73,13 +73,13 @@
         offer: {
           title: TITLE_DATA[i],
           address: coordsX + ', ' + coordsY,
-          price: util.getRandomInt(MIN_PRICE, MAX_PRICE),
-          type: util.getRandomArrayElement(TYPE_DATA),
-          rooms: util.getRandomInt(MIN_ROOMS, MAX_ROOMS),
-          guests: util.getRandomInt(MIN_GUESTS, MAX_GUESTS),
-          checkin: util.getRandomArrayElement(TIME_DATA),
-          checkout: util.getRandomArrayElement(TIME_DATA),
-          features: util.getRandomElems(FEATURES_DATA),
+          price: window.util.getRandomInt(MIN_PRICE, MAX_PRICE),
+          type: window.util.getRandomArrayElement(TYPE_DATA),
+          rooms: window.util.getRandomInt(MIN_ROOMS, MAX_ROOMS),
+          guests: window.util.getRandomInt(MIN_GUESTS, MAX_GUESTS),
+          checkin: window.util.getRandomArrayElement(TIME_DATA),
+          checkout: window.util.getRandomArrayElement(TIME_DATA),
+          features: window.util.getRandomElems(FEATURES_DATA),
           description: '',
           photos: PHOTOS_DATA
         },
@@ -97,5 +97,5 @@
 
   window.data = {
     adsDataArray: generateAdsData(ADS_COUNT)
-  }
+  };
 })();
