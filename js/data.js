@@ -1,3 +1,4 @@
+'use strict';
 (function () {
   var TITLE_DATA = [
     'Большая уютная квартира',

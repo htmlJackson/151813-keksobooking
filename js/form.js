@@ -1,3 +1,4 @@
+'use strict';
 (function () {
   var OFFER_DATA = {
     flat: {
@@ -63,7 +64,6 @@
 
   window.form = {
     adForm: adForm,
-    inputAddress: inputAddress,
     offerData: OFFER_DATA,
       /**
         * Валидация соответствия количества комнат и гостей
