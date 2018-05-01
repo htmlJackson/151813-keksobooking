@@ -52,6 +52,8 @@
   var MIN_COORDS_Y = 150;
   var MAX_COORDS_Y = 500;
 
+  var ADS_COUNT = 8;
+
   /**
     * Генерация данных для карточки объявлений
     * @param {number} count - количество объявлений
@@ -60,8 +62,8 @@
   var generateAdsData = function (count) {
     var adArray = [];
     for (var i = 0; i < count; i++) {
-      var coordsX = getRandomInt(MIN_COORDS_X, MAX_COORDS_X);
-      var coordsY = getRandomInt(MIN_COORDS_Y, MAX_COORDS_Y);
+      var coordsX = util.getRandomInt(MIN_COORDS_X, MAX_COORDS_X);
+      var coordsY = util.getRandomInt(MIN_COORDS_Y, MAX_COORDS_Y);
 
       var ad = {
         author: {
@@ -70,13 +72,13 @@
         offer: {
           title: TITLE_DATA[i],
           address: coordsX + ', ' + coordsY,
-          price: getRandomInt(MIN_PRICE, MAX_PRICE),
-          type: getRandomArrayElement(TYPE_DATA),
-          rooms: getRandomInt(MIN_ROOMS, MAX_ROOMS),
-          guests: getRandomInt(MIN_GUESTS, MAX_GUESTS),
-          checkin: getRandomArrayElement(TIME_DATA),
-          checkout: getRandomArrayElement(TIME_DATA),
-          features: getRandomElems(FEATURES_DATA),
+          price: util.getRandomInt(MIN_PRICE, MAX_PRICE),
+          type: util.getRandomArrayElement(TYPE_DATA),
+          rooms: util.getRandomInt(MIN_ROOMS, MAX_ROOMS),
+          guests: util.getRandomInt(MIN_GUESTS, MAX_GUESTS),
+          checkin: util.getRandomArrayElement(TIME_DATA),
+          checkout: util.getRandomArrayElement(TIME_DATA),
+          features: util.getRandomElems(FEATURES_DATA),
           description: '',
           photos: PHOTOS_DATA
         },
@@ -90,4 +92,9 @@
 
     return adArray;
   };
+
+
+  window.data = {
+    adsDataArray: generateAdsData(ADS_COUNT)
+  }
 })();

@@ -1,5 +1,4 @@
 'use strict';
-var ADS_COUNT = 8;
 
 var MAIN_PIN_WIDTH = 65;
 var MAIN_PIN_HEIGHT = 65;
@@ -71,7 +70,7 @@ var fillPopup = function (popup, dataObject) {
   popupFeatures.textContent = '';
   popupPhotos.textContent = '';
 
-  var photosArray = shuffleArray(dataObject.offer.photos);
+  var photosArray = util.shuffleArray(dataObject.offer.photos);
 
   for (var i = 0; i < photosArray.length; i++) {
     var newImg = popupImage.cloneNode(true);
@@ -119,7 +118,7 @@ var popupCloserClickHandler = function (evt) {
   closePopup();
 };
 
-var adsDataArray = generateAdsData(ADS_COUNT);
+var adsDataArray = data.adsDataArray;
 
 var pinsList = document.querySelector('.map__pins');
 pinsList.appendChild(renderPins(adsDataArray));
@@ -186,7 +185,7 @@ var enablePage = function () {
 
   addDragPin();
   setAddress();
-  validateGuests();
+  form.validateGuests();
 };
 
 /**
