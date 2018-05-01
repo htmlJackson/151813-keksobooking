@@ -105,7 +105,7 @@
       targetId = target.dataset.id;
     }
 
-    fillPopup(card, adsDataArray[targetId]);
+    fillPopup(card,  data.adsDataArray[targetId]);
     openPopup();
   };
 
@@ -118,10 +118,8 @@
     closePopup();
   };
 
-  var adsDataArray = data.adsDataArray;
-
   var pinsList = document.querySelector('.map__pins');
-  pinsList.appendChild(renderPins(adsDataArray));
+  pinsList.appendChild(renderPins(data.adsDataArray));
 
   var mapSection = document.querySelector('.map');
   var card = renderPopup();
@@ -264,6 +262,7 @@
 
         mainPin.style.top = moveCoords.y + 'px';
         mainPin.style.left = moveCoords.x + 'px';
+        setAddress();
       };
 
       var mouseUpHandler = function (upEvt) {
@@ -271,8 +270,6 @@
 
         document.removeEventListener('mousemove', mouseMoveHandler);
         document.removeEventListener('mouseup', mouseUpHandler);
-
-        setAddress();
       };
 
       document.addEventListener('mousemove', mouseMoveHandler);
