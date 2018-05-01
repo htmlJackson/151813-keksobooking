@@ -65,6 +65,7 @@
   window.form = {
     adForm: adForm,
     offerData: OFFER_DATA,
+    
       /**
         * Валидация соответствия количества комнат и гостей
       */
