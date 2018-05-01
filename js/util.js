@@ -1,3 +1,4 @@
+'use strict';
 (function () {
   window.util = {
     /**
@@ -57,5 +58,5 @@
       }
       return resultArray;
     }
-  }
+  };
 })();

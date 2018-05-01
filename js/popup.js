@@ -59,14 +59,14 @@
       card.querySelector('.popup__title').textContent = dataObject.offer.title;
       card.querySelector('.popup__text--address').textContent = dataObject.offer.address;
       card.querySelector('.popup__text--price').textContent = dataObject.offer.price + '₽/ночь';
-      card.querySelector('.popup__type').textContent = form.offerData[dataObject.offer.type].translate;
+      card.querySelector('.popup__type').textContent = window.form.offerData[dataObject.offer.type].translate;
       card.querySelector('.popup__text--capacity').textContent = dataObject.offer.rooms + ' комнаты для ' + dataObject.offer.guests + ' гостей';
       card.querySelector('.popup__text--time').textContent = 'Заезд после ' + dataObject.offer.checkin + ', выезд до ' + dataObject.offer.checkout;
       card.querySelector('.popup__description').textContent = dataObject.offer.description;
       popupFeatures.textContent = '';
       popupPhotos.textContent = '';
 
-      var photosArray = util.shuffleArray(dataObject.offer.photos);
+      var photosArray = window.util.shuffleArray(dataObject.offer.photos);
 
       for (var i = 0; i < photosArray.length; i++) {
         var newImg = popupImage.cloneNode(true);
