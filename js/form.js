@@ -43,12 +43,10 @@
     window.form.validateGuests();
   };
 
-  var formSubmitHandler = function (obj) {
+  var formSubmitHandler = function () {
     adForm.reset();
     document.querySelector('input#address').value = window.map.defaultAddress;
   };
-
-
 
   selectType.addEventListener('change', function () {
     var value = selectType.value;
@@ -66,8 +64,6 @@
 
   selectRoomNumber.addEventListener('change', selectChangeHandler);
   selectCapacity.addEventListener('change', selectChangeHandler);
-
-
 
   adForm.addEventListener('submit', function (evt) {
     window.backend.upload(new FormData(adForm), formSubmitHandler, window.util.errorHandler);
