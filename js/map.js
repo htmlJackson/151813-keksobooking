@@ -59,6 +59,7 @@
 
   /**
     * Установка адреса относительно текущих координат главного пина
+    * @return {string} - адрес
   */
   var setAddress = function () {
     var left = parseInt(mainPin.style.left, 10);

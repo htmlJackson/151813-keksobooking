@@ -61,7 +61,7 @@
       popupPhotos.textContent = '';
 
       var photosArray = dataObject.offer.photos;
-      if ( photosArray.length ) {
+      if (photosArray.length) {
         for (var i = 0; i < photosArray.length; i++) {
           var newImg = popupImage.cloneNode(true);
           newImg.src = photosArray[i];
@@ -70,8 +70,7 @@
       }
 
       var featuresArray = dataObject.offer.features;
-      if ( featuresArray.length ) {
-        console.log(featuresArray.length);
+      if (featuresArray.length) {
         for (var j = 0; j < dataObject.offer.features.length; j++) {
           var newFeature = popupFeature.cloneNode(true);
           newFeature.classList = '';

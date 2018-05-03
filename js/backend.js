@@ -1,5 +1,4 @@
 'use strict';
-
 (function () {
   window.backend = {
     load: function (onLoad, onError) {
@@ -30,7 +29,7 @@
       xhr.send();
     },
 
-    upload: function(data, onLoad, onError) {
+    upload: function (data, onLoad, onError) {
       var URL = 'https://js.dump.academy/keksobooking';
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
