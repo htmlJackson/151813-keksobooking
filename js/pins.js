@@ -1,5 +1,7 @@
 'use strict';
 (function () {
+  var ADS_COUNT = 8;
+
   var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
   var pinsFragment = document.createDocumentFragment();
   /**
@@ -17,7 +19,7 @@
       targetId = target.dataset.id;
     }
 
-    window.popup.fill(window.data.adsDataArray[targetId]);
+    window.popup.fill(window.backend.data[targetId]);
     window.popup.open();
   };
 
@@ -28,12 +30,13 @@
       * @return {Object} - фрагмент для вставки на страницу
     */
     render: function (dataArray) {
-      for (var i = 0; i < dataArray.length; i++) {
+      for (var i = 0; i < ADS_COUNT; i++) {
         var pinElement = pinTemplate.cloneNode(true);
         var pinImage = pinElement.querySelector('img');
         pinElement.dataset.id = i;
         pinElement.style.left = dataArray[i].location.x + (pinElement.clientWidth / 2) + 'px';
         pinElement.style.top = dataArray[i].location.y - pinElement.clientHeight + 'px';
+        pinElement.style.display = 'none';
         pinImage.src = dataArray[i].author.avatar;
         pinImage.alt = dataArray[i].offer.title;
 
@@ -41,6 +44,8 @@
         pinsFragment.appendChild(pinElement);
       }
 
+      var pinsList = document.querySelector('.map__pins');
+      pinsList.appendChild(pinsFragment);
       return pinsFragment;
     }
   };
