@@ -26,19 +26,16 @@
     * Активация страницы
   */
   var enablePage = function () {
-    var pinsElems = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+
     mapSection.classList.remove('map--faded');
     window.form.adForm.classList.remove('ad-form--disabled');
+
     for (var i = 0; i < fieldsetCollection.length; i++) {
       fieldsetCollection[i].disabled = false;
     }
 
-    for (var j = 0; j < pinsElems.length; j++) {
-      pinsElems[j].style.display = 'block';
-    }
-
-    addDragPin();
     setAddress();
+    window.pins.show();
     window.form.validateGuests();
   };
 
@@ -132,7 +129,7 @@
       document.addEventListener('mouseup', mouseUpHandler);
     });
   };
-
+  addDragPin();
   disablePage();
 
   mainPin.addEventListener('mouseup', mainpinMouseupHandler);
