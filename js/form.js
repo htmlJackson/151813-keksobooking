@@ -49,10 +49,11 @@
   */
   var formSubmitHandler = function () {
     adForm.reset();
+    var successBlock = document.querySelector('.success');
     document.querySelector('input#address').value = window.map.defaultAddress;
-    document.querySelector('.success').classList.remove('hidden');
-    document.querySelector('.success').addEventListener('click', function () {
-      this.classList.add('hidden');
+    successBlock.classList.remove('hidden');
+    successBlock.addEventListener('click', function () {
+      successBlock.classList.add('hidden');
     });
     window.pins.clean();
     window.map.disablePage();

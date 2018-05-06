@@ -10,7 +10,7 @@
 
     var FilterElem = {
       TYPE: mapFilters.querySelector('#housing-type'),
-      PRICE:  mapFilters.querySelector('#housing-price'),
+      PRICE: mapFilters.querySelector('#housing-price'),
       ROOMS: mapFilters.querySelector('#housing-rooms'),
       GUESTS: mapFilters.querySelector('#housing-guests')
     };
