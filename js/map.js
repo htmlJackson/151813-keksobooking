@@ -5,7 +5,6 @@
   var SHARP_END_HEIGHT = 22; // размер псевдоэлемента-указателя
 
   var MAP_WIDTH = document.querySelector('.map').offsetWidth;
-  var MAP_HEIGHT = document.querySelector('.map').offsetHeight;
 
   var DragCoord = {
     MIN_X: 0,

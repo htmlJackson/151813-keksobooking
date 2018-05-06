@@ -59,7 +59,9 @@
     });
 
     window.pins.clean();
-    window.pins.render(filteredData);
+    window.debounce(function () {
+      window.pins.render(filteredData);
+    });
   };
 
   window.filter = {
