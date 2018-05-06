@@ -10,8 +10,8 @@
   var MAX_DRAG_COORDS_X = MAP_WIDTH - MAIN_PIN_WIDTH;
   var MAX_DRAG_COORDS_Y = MAP_HEIGHT - MAIN_PIN_HEIGHT - SHARP_END_HEIGHT - document.querySelector('.map__filters-container').offsetHeight;
 
-  window.backend.load(window.pins.render, window.util.errorHandler);
 
+  window.backend.load(window.pins.render, window.util.errorHandler);
   var mapSection = document.querySelector('.map');
   var fieldsetCollection = window.form.adForm.querySelectorAll('fieldset');
   var mainPin = document.querySelector('.map__pin--main');
@@ -26,7 +26,6 @@
     * Активация страницы
   */
   var enablePage = function () {
-
     mapSection.classList.remove('map--faded');
     window.form.adForm.classList.remove('ad-form--disabled');
 
@@ -36,6 +35,7 @@
 
     setAddress();
     window.pins.show();
+    window.filter();
     window.form.validateGuests();
   };
 

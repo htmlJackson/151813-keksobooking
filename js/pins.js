@@ -8,20 +8,9 @@
     * Обработчик клика на пине
     * @param {Object} evt - объект события
   */
-  var pinClickHandler = function (evt) {
-    evt.preventDefault();
-    var target = evt.target;
-    var targetId;
-
-    if (target.tagName === 'IMG') {
-      targetId = target.parentNode.dataset.id;
-    } else {
-      targetId = target.dataset.id;
-    }
-
-    window.popup.fill(window.backend.data[targetId]);
-    window.popup.open();
-  };
+  // var pinClickHandler = function (evt) {
+  //
+  // };
 
   window.pins = {
     /**
@@ -30,6 +19,7 @@
       * @return {Object} - фрагмент для вставки на страницу
     */
     render: function (dataArray) {
+      
       for (var i = 0; i < dataArray.length; i++) {
         var pinDataObject = dataArray[i];
         var pinNode = pinTemplate.cloneNode(true);
@@ -41,7 +31,21 @@
         pinImage.src = pinDataObject.author.avatar;
         pinImage.alt = pinDataObject.offer.title;
 
-        pinNode.addEventListener('click', pinClickHandler);
+        pinNode.addEventListener('click', function (evt) {
+          evt.preventDefault();
+          var target = evt.target;
+          var targetId;
+
+          if (target.tagName === 'IMG') {
+            targetId = target.parentNode.dataset.id;
+          } else {
+            targetId = target.dataset.id;
+          }
+
+          window.popup.fill(dataArray[targetId]);
+          window.popup.open();
+        });
+
         pinsFragment.appendChild(pinNode);
       }
       pinsList.appendChild(pinsFragment);
