@@ -1,16 +1,9 @@
 'use strict';
 (function () {
-  var ADS_COUNT = 5;
+  var ADS_MAX = 5;
   var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
   var pinsFragment = document.createDocumentFragment();
   var pinsList = document.querySelector('.map__pins');
-  /**
-    * Обработчик клика на пине
-    * @param {Object} evt - объект события
-  */
-  // var pinClickHandler = function (evt) {
-  //
-  // };
 
   window.pins = {
     /**
@@ -19,8 +12,8 @@
       * @return {Object} - фрагмент для вставки на страницу
     */
     render: function (dataArray) {
-      
-      for (var i = 0; i < dataArray.length; i++) {
+      var renderCount = (dataArray.length > ADS_MAX) ? ADS_MAX : dataArray.length;
+      for (var i = 0; i < renderCount; i++) {
         var pinDataObject = dataArray[i];
         var pinNode = pinTemplate.cloneNode(true);
         var pinImage = pinNode.querySelector('img');
