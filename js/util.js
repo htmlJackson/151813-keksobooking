@@ -70,8 +70,13 @@
       node.style.left = 0;
       node.style.right = 0;
       node.style.fontSize = '30px';
+      node.style.cursor = 'pointer';
       node.textContent = 'Упс! Что-то пошло не так! :( ' + errorMessage;
+      node.addEventListener('click', function () {
+        document.body.removeChild(node);
+      });
       document.body.insertAdjacentElement('afterbegin', node);
+
     }
   };
 })();

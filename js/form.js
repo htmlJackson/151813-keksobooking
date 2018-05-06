@@ -25,8 +25,9 @@
     '3': ['1', '2', '3'],
     '100': ['0']
   };
-  var adForm = document.querySelector('.ad-form');
 
+  var adForm = document.querySelector('.ad-form');
+  var adReset = document.querySelector('.ad-form__reset');
   var selectRoomNumber = document.querySelector('select#room_number');
   var selectCapacity = document.querySelector('select#capacity');
 
@@ -43,9 +44,18 @@
     window.form.validateGuests();
   };
 
+  /**
+    * Отправка формы
+  */
   var formSubmitHandler = function () {
     adForm.reset();
     document.querySelector('input#address').value = window.map.defaultAddress;
+    document.querySelector('.success').classList.remove('hidden');
+    document.querySelector('.success').addEventListener('click', function () {
+      this.classList.add('hidden');
+    });
+    window.pins.clean();
+    window.map.disablePage();
   };
 
   selectType.addEventListener('change', function () {
@@ -69,6 +79,12 @@
     window.backend.upload(new FormData(adForm), formSubmitHandler, window.util.errorHandler);
     evt.preventDefault();
   });
+
+  adReset.addEventListener('click', function () {
+    window.pins.clean();
+    window.map.disablePage();
+  });
+
 
   window.form = {
     adForm: adForm,

@@ -13,10 +13,12 @@
     */
     render: function (dataArray) {
       var renderCount = (dataArray.length > ADS_MAX) ? ADS_MAX : dataArray.length;
+
       for (var i = 0; i < renderCount; i++) {
         var pinDataObject = dataArray[i];
         var pinNode = pinTemplate.cloneNode(true);
         var pinImage = pinNode.querySelector('img');
+
         pinNode.dataset.id = i;
         pinNode.style.left = pinDataObject.location.x + (pinNode.clientWidth / 2) + 'px';
         pinNode.style.top = pinDataObject.location.y - pinNode.clientHeight + 'px';
@@ -43,19 +45,10 @@
       }
       pinsList.appendChild(pinsFragment);
       window.pins.elems = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-      return pinsFragment;
-    },
-
-    show: function () {
       window.pins.elems.forEach(function (it) {
         it.style.display = 'block';
       });
-    },
-
-    hide: function () {
-      window.pins.elems.forEach(function (it) {
-        it.style.display = 'none';
-      });
+      return pinsFragment;
     },
 
     clean: function () {
