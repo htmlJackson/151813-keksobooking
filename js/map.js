@@ -5,40 +5,39 @@
   var SHARP_END_HEIGHT = 22; // размер псевдоэлемента-указателя
 
   var MAP_WIDTH = document.querySelector('.map').offsetWidth;
-  var MAP_HEIGHT = document.querySelector('.map').offsetHeight;
 
-  var MAX_DRAG_COORDS_X = MAP_WIDTH - MAIN_PIN_WIDTH;
-  var MAX_DRAG_COORDS_Y = MAP_HEIGHT - MAIN_PIN_HEIGHT - SHARP_END_HEIGHT - document.querySelector('.map__filters-container').offsetHeight;
-
-  window.backend.load(window.pins.render, window.util.errorHandler);
+  var DragCoord = {
+    MIN_X: 0,
+    MAX_X: MAP_WIDTH - MAIN_PIN_WIDTH,
+    MIN_Y: 150,
+    MAX_Y: 500
+  };
 
   var mapSection = document.querySelector('.map');
   var fieldsetCollection = window.form.adForm.querySelectorAll('fieldset');
   var mainPin = document.querySelector('.map__pin--main');
   var addressInput = window.form.adForm.querySelector('#address');
 
-  var mainpinMouseupHandler = function () {
-    enablePage();
-    mainPin.removeEventListener('mouseup', mainpinMouseupHandler);
+  var PinDefault = {
+    LEFT: mainPin.style.left,
+    TOP: mainPin.style.top
   };
 
   /**
     * Активация страницы
   */
   var enablePage = function () {
-    var pinsElems = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    mainPin.removeEventListener('mouseup', enablePage);
     mapSection.classList.remove('map--faded');
     window.form.adForm.classList.remove('ad-form--disabled');
+
     for (var i = 0; i < fieldsetCollection.length; i++) {
       fieldsetCollection[i].disabled = false;
     }
 
-    for (var j = 0; j < pinsElems.length; j++) {
-      pinsElems[j].style.display = 'block';
-    }
-
-    addDragPin();
+    window.backend.load(window.pins.render, window.util.errorHandler);
     setAddress();
+    window.filter.init();
     window.form.validateGuests();
   };
 
@@ -52,8 +51,13 @@
     for (var i = 0; i < fieldsetCollection.length; i++) {
       fieldsetCollection[i].disabled = true;
     }
+    mainPin.style.left = PinDefault.LEFT;
+    mainPin.style.top = PinDefault.TOP;
+
+    document.querySelector('.map__filters').reset();
 
     setAddress();
+    mainPin.addEventListener('mouseup', enablePage);
     window.popup.close();
   };
 
@@ -100,20 +104,20 @@
           y: mainPin.offsetTop - shift.y
         };
 
-        if (moveCoords.x <= 0) {
-          moveCoords.x = 0;
+        if (moveCoords.x <= DragCoord.MIN_X) {
+          moveCoords.x = DragCoord.MIN_X;
         }
 
-        if (moveCoords.x > MAX_DRAG_COORDS_X) {
-          moveCoords.x = MAX_DRAG_COORDS_X;
+        if (moveCoords.x > DragCoord.MAX_X) {
+          moveCoords.x = DragCoord.MAX_X;
         }
 
-        if (moveCoords.y <= 0) {
-          moveCoords.y = 0;
+        if (moveCoords.y <= DragCoord.MIN_Y) {
+          moveCoords.y = DragCoord.MIN_Y;
         }
 
-        if (moveCoords.y > MAX_DRAG_COORDS_Y) {
-          moveCoords.y = MAX_DRAG_COORDS_Y;
+        if (moveCoords.y > DragCoord.MAX_Y) {
+          moveCoords.y = DragCoord.MAX_Y;
         }
 
         mainPin.style.top = moveCoords.y + 'px';
@@ -133,12 +137,14 @@
     });
   };
 
+  addDragPin();
   disablePage();
 
-  mainPin.addEventListener('mouseup', mainpinMouseupHandler);
-
   window.map = {
-    defaultAddress: setAddress()
+    mainPin: mainPin,
+    enablePage: enablePage,
+    defaultAddress: setAddress(),
+    disablePage: disablePage
   };
 
 })();
