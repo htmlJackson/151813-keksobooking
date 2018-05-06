@@ -7,8 +7,12 @@
   var MAP_WIDTH = document.querySelector('.map').offsetWidth;
   var MAP_HEIGHT = document.querySelector('.map').offsetHeight;
 
-  var MAX_DRAG_COORDS_X = MAP_WIDTH - MAIN_PIN_WIDTH;
-  var MAX_DRAG_COORDS_Y = MAP_HEIGHT - MAIN_PIN_HEIGHT - SHARP_END_HEIGHT - document.querySelector('.map__filters-container').offsetHeight;
+  var DragCoord = {
+    MIN_X: 0,
+    MAX_X: MAP_WIDTH - MAIN_PIN_WIDTH,
+    MIN_Y: 150,
+    MAX_Y: 500
+  };
 
   var mapSection = document.querySelector('.map');
   var fieldsetCollection = window.form.adForm.querySelectorAll('fieldset');
@@ -34,7 +38,7 @@
 
     window.backend.load(window.pins.render, window.util.errorHandler);
     setAddress();
-    window.filter();
+    window.filter.init();
     window.form.validateGuests();
   };
 
@@ -101,20 +105,20 @@
           y: mainPin.offsetTop - shift.y
         };
 
-        if (moveCoords.x <= 0) {
-          moveCoords.x = 0;
+        if (moveCoords.x <= DragCoord.MIN_X) {
+          moveCoords.x = DragCoord.MIN_X;
         }
 
-        if (moveCoords.x > MAX_DRAG_COORDS_X) {
-          moveCoords.x = MAX_DRAG_COORDS_X;
+        if (moveCoords.x > DragCoord.MAX_X) {
+          moveCoords.x = DragCoord.MAX_X;
         }
 
-        if (moveCoords.y <= 0) {
-          moveCoords.y = 0;
+        if (moveCoords.y <= DragCoord.MIN_Y) {
+          moveCoords.y = DragCoord.MIN_Y;
         }
 
-        if (moveCoords.y > MAX_DRAG_COORDS_Y) {
-          moveCoords.y = MAX_DRAG_COORDS_Y;
+        if (moveCoords.y > DragCoord.MAX_Y) {
+          moveCoords.y = DragCoord.MAX_Y;
         }
 
         mainPin.style.top = moveCoords.y + 'px';

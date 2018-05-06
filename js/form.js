@@ -28,14 +28,14 @@
 
   var adForm = document.querySelector('.ad-form');
   var adReset = document.querySelector('.ad-form__reset');
-  var selectRoomNumber = document.querySelector('select#room_number');
-  var selectCapacity = document.querySelector('select#capacity');
+  var selectRoomNumber = document.querySelector('#room_number');
+  var selectCapacity = document.querySelector('#capacity');
 
-  var selectType = document.querySelector('select#type');
-  var inputPrice = document.querySelector('input#price');
+  var selectType = document.querySelector('#type');
+  var inputPrice = document.querySelector('#price');
 
-  var selectTimeIn = document.querySelector('select#timein');
-  var selectTimeOut = document.querySelector('select#timeout');
+  var selectTimeIn = document.querySelector('#timein');
+  var selectTimeOut = document.querySelector('#timeout');
 
   /**
     * Изменение селекта
@@ -50,7 +50,7 @@
   var formSubmitHandler = function () {
     adForm.reset();
     var successBlock = document.querySelector('.success');
-    document.querySelector('input#address').value = window.map.defaultAddress;
+    document.querySelector('#address').value = window.map.defaultAddress;
     successBlock.classList.remove('hidden');
     successBlock.addEventListener('click', function () {
       successBlock.classList.add('hidden');

@@ -63,19 +63,19 @@
       var photosArray = dataObject.offer.photos;
       if (photosArray.length) {
         for (var i = 0; i < photosArray.length; i++) {
-          var newImg = popupImage.cloneNode(true);
-          newImg.src = photosArray[i];
-          popupPhotos.appendChild(newImg);
+          var imgNode = popupImage.cloneNode(true);
+          imgNode.src = photosArray[i];
+          popupPhotos.appendChild(imgNode);
         }
       }
 
       var featuresArray = dataObject.offer.features;
       if (featuresArray.length) {
         for (var j = 0; j < dataObject.offer.features.length; j++) {
-          var newFeature = popupFeature.cloneNode(true);
-          newFeature.classList = '';
-          newFeature.classList.add('popup__feature', 'popup__feature--' + dataObject.offer.features[j]);
-          popupFeatures.appendChild(newFeature);
+          var featureNode = popupFeature.cloneNode(true);
+          featureNode.classList = '';
+          featureNode.classList.add('popup__feature', 'popup__feature--' + dataObject.offer.features[j]);
+          popupFeatures.appendChild(featureNode);
         }
       }
 
