@@ -1,15 +1,12 @@
 'use strict';
 (function () {
   window.filter = function () {
-
     var PriceRage = {
       LOW: 10000,
       HIGH: 50000
     };
 
     var mapFilters = document.querySelector('.map__filters');
-    var filterSelects = mapFilters.querySelectorAll('select');
-    var filterInputs = mapFilters.querySelectorAll('input');
 
     var FilterElem = {
       TYPE: mapFilters.querySelector('#housing-type'),
@@ -17,6 +14,10 @@
       ROOMS: mapFilters.querySelector('#housing-rooms'),
       GUESTS: mapFilters.querySelector('#housing-guests')
     };
+
+
+    var filterSelects = mapFilters.querySelectorAll('select');
+    var filterInputs = mapFilters.querySelectorAll('input');
 
     var isType = function (elem) {
       return (FilterElem.TYPE.value === elem.offer.type || FilterElem.TYPE.value === 'any');
@@ -61,7 +62,9 @@
       });
 
       window.pins.clean();
-      window.pins.render(filteredData);
+      window.debounce(function () {
+        window.pins.render(filteredData);
+      });
     };
 
     filterSelects.forEach(function (it) {
