@@ -57,6 +57,7 @@
       document.querySelector('#address').value = window.map.defaultAddress;
       window.pins.clean();
       window.map.disablePage();
+      window.file.clean();
     }, 1000);
 
   };
@@ -86,6 +87,7 @@
   adReset.addEventListener('click', function () {
     window.pins.clean();
     window.map.disablePage();
+    window.file.clean();
   });
 
 
