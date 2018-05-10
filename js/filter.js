@@ -7,18 +7,18 @@
 
   var mapFilters = document.querySelector('.map__filters');
 
-  var FilterElem = {
-    TYPE: mapFilters.querySelector('#housing-type'),
-    PRICE: mapFilters.querySelector('#housing-price'),
-    ROOMS: mapFilters.querySelector('#housing-rooms'),
-    GUESTS: mapFilters.querySelector('#housing-guests')
+  var filterElem = {
+    type: mapFilters.querySelector('#housing-type'),
+    price: mapFilters.querySelector('#housing-price'),
+    rooms: mapFilters.querySelector('#housing-rooms'),
+    guests: mapFilters.querySelector('#housing-guests')
   };
 
   var filterSelects = mapFilters.querySelectorAll('select');
   var filterInputs = mapFilters.querySelectorAll('input');
 
   var isType = function (elem) {
-    return (FilterElem.TYPE.value === elem.offer.type || FilterElem.TYPE.value === 'any');
+    return (filterElem.type.value === elem.offer.type || filterElem.type.value === 'any');
   };
 
   var isPrice = function (elem) {
@@ -28,15 +28,15 @@
       middle: (elem.offer.price <= PriceRage.HIGH && elem.offer.price >= PriceRage.LOW),
       high: (elem.offer.price > PriceRage.HIGH)
     };
-    return PriceValue[FilterElem.PRICE.value];
+    return PriceValue[filterElem.price.value];
   };
 
   var isRooms = function (elem) {
-    return (+FilterElem.ROOMS.value === elem.offer.rooms || FilterElem.ROOMS.value === 'any');
+    return (+filterElem.rooms.value === elem.offer.rooms || filterElem.rooms.value === 'any');
   };
 
   var isGuests = function (elem) {
-    return (+FilterElem.GUESTS.value === elem.offer.guests || FilterElem.GUESTS.value === 'any');
+    return (+filterElem.guests.value === elem.offer.guests || filterElem.guests.value === 'any');
   };
 
   var filterChangeHandler = function () {

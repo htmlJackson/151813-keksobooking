@@ -48,15 +48,17 @@
     * Отправка формы
   */
   var formSubmitHandler = function () {
-    adForm.reset();
     var successBlock = document.querySelector('.success');
-    document.querySelector('#address').value = window.map.defaultAddress;
     successBlock.classList.remove('hidden');
-    successBlock.addEventListener('click', function () {
+
+    setTimeout(function () {
       successBlock.classList.add('hidden');
-    });
-    window.pins.clean();
-    window.map.disablePage();
+      adForm.reset();
+      document.querySelector('#address').value = window.map.defaultAddress;
+      window.pins.clean();
+      window.map.disablePage();
+    }, 1000);
+
   };
 
   selectType.addEventListener('change', function () {

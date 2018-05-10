@@ -4,13 +4,18 @@
   var MAIN_PIN_HEIGHT = 65;
   var SHARP_END_HEIGHT = 22; // размер псевдоэлемента-указателя
 
-  var MAP_WIDTH = document.querySelector('.map').offsetWidth;
+  var VerticalMapLimit = {
+    MIN: 150,
+    MAX: 700
+  };
 
-  var DragCoord = {
-    MIN_X: 0,
-    MAX_X: MAP_WIDTH - MAIN_PIN_WIDTH,
-    MIN_Y: 150,
-    MAX_Y: 500
+  var mapWidth = document.querySelector('.map').offsetWidth;
+
+  var dragCoord = {
+    minX: 0,
+    maxX: mapWidth - MAIN_PIN_WIDTH,
+    minY: VerticalMapLimit.MIN - MAIN_PIN_HEIGHT - SHARP_END_HEIGHT,
+    maxY: VerticalMapLimit.MAX - MAIN_PIN_HEIGHT - SHARP_END_HEIGHT
   };
 
   var mapSection = document.querySelector('.map');
@@ -27,13 +32,13 @@
     * Активация страницы
   */
   var enablePage = function () {
-    mainPin.removeEventListener('mouseup', enablePage);
+    mainPin.removeEventListener('mouseup', mainPinMouseUpHandler);
     mapSection.classList.remove('map--faded');
     window.form.adForm.classList.remove('ad-form--disabled');
 
-    for (var i = 0; i < fieldsetCollection.length; i++) {
-      fieldsetCollection[i].disabled = false;
-    }
+    Array.from(fieldsetCollection).forEach(function (it) {
+      it.disabled = false;
+    });
 
     window.backend.load(window.pins.render, window.util.errorHandler);
     setAddress();
@@ -48,17 +53,26 @@
     mapSection.classList.add('map--faded');
     window.form.adForm.classList.add('ad-form--disabled');
 
-    for (var i = 0; i < fieldsetCollection.length; i++) {
-      fieldsetCollection[i].disabled = true;
-    }
+    Array.from(fieldsetCollection).forEach(function (it) {
+      it.disabled = true;
+    });
+
     mainPin.style.left = PinDefault.LEFT;
     mainPin.style.top = PinDefault.TOP;
 
     document.querySelector('.map__filters').reset();
 
     setAddress();
-    mainPin.addEventListener('mouseup', enablePage);
+    mainPin.addEventListener('mouseup', mainPinMouseUpHandler);
     window.popup.close();
+  };
+
+  /**
+    * Отпускание главного пина
+  */
+  var mainPinMouseUpHandler = function (evt) {
+    evt.preventDefault();
+    enablePage();
   };
 
   /**
@@ -104,20 +118,20 @@
           y: mainPin.offsetTop - shift.y
         };
 
-        if (moveCoords.x <= DragCoord.MIN_X) {
-          moveCoords.x = DragCoord.MIN_X;
+        if (moveCoords.x <= dragCoord.minX) {
+          moveCoords.x = dragCoord.minX;
         }
 
-        if (moveCoords.x > DragCoord.MAX_X) {
-          moveCoords.x = DragCoord.MAX_X;
+        if (moveCoords.x > dragCoord.maxX) {
+          moveCoords.x = dragCoord.maxX;
         }
 
-        if (moveCoords.y <= DragCoord.MIN_Y) {
-          moveCoords.y = DragCoord.MIN_Y;
+        if (moveCoords.y <= dragCoord.minY) {
+          moveCoords.y = dragCoord.minY;
         }
 
-        if (moveCoords.y > DragCoord.MAX_Y) {
-          moveCoords.y = DragCoord.MAX_Y;
+        if (moveCoords.y > dragCoord.maxY) {
+          moveCoords.y = dragCoord.maxY;
         }
 
         mainPin.style.top = moveCoords.y + 'px';

@@ -62,11 +62,16 @@
 
       var photosArray = dataObject.offer.photos;
       if (photosArray.length) {
-        for (var i = 0; i < photosArray.length; i++) {
+        // for (var i = 0; i < photosArray.length; i++) {
+        //   var imgNode = popupImage.cloneNode(true);
+        //   imgNode.src = photosArray[i];
+        //   popupPhotos.appendChild(imgNode);
+        // }
+        photosArray.forEach(function (it) {
           var imgNode = popupImage.cloneNode(true);
-          imgNode.src = photosArray[i];
+          imgNode.src = it;
           popupPhotos.appendChild(imgNode);
-        }
+        });
       }
 
       var featuresArray = dataObject.offer.features;
