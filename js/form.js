@@ -37,30 +37,64 @@
   var selectTimeIn = document.querySelector('#timein');
   var selectTimeOut = document.querySelector('#timeout');
 
-  /**
-    * Изменение селекта
-  */
-  var selectChangeHandler = function () {
-    window.form.validateGuests();
-  };
+/**
+ * Функция определения выбранного селекта количества комнат.
+ * @param {number} room количество комнат у выбранного селекта
+ * @param {number} capacity количество мест в комнатах
+ * @return {boolean} Возвращает true, если комнат 100.
+ */
+var isRoomNumber100 = function (room, capacity) {
+  return (room === '100' && capacity === '0');
+};
 
-  /**
-    * Отправка формы
-  */
-  var formSubmitHandler = function () {
-    var successBlock = document.querySelector('.success');
-    successBlock.classList.remove('hidden');
+/**
+ * Функция определения выбранного селекта количества комнат.
+ * @param {number} room количество комнат у выбранного селекта
+ * @param {number} capacity количество мест в комнатах
+ * @return {boolean} Возвращает true, если комнат не 100.
+ */
+var isRoomNumber123 = function (room, capacity) {
+  return (room >= capacity && capacity !== '0' && room !== '100');
+};
 
-    setTimeout(function () {
-      successBlock.classList.add('hidden');
-      adForm.reset();
-      document.querySelector('#address').value = window.map.defaultAddress;
-      window.pins.clean();
-      window.map.disablePage();
-      window.file.clean();
-    }, 1000);
+/**
+  * Отправка формы
+*/
+var formSubmitHandler = function () {
+  var successBlock = document.querySelector('.success');
+  successBlock.classList.remove('hidden');
 
-  };
+  setTimeout(function () {
+    successBlock.classList.add('hidden');
+    adForm.reset();
+    document.querySelector('#address').value = window.map.defaultAddress;
+    window.pins.clean();
+    window.map.disablePage();
+    window.file.clean();
+  }, 1000);
+
+};
+
+for (var i = 0; i < selectCapacity.length; i++) {
+  if (selectCapacity[i].value === '1') {
+    selectCapacity[i].disabled = false;
+    selectCapacity[i].selected = true;
+  } else {
+    selectCapacity[i].disabled = true;
+  }
+}
+
+selectRoomNumber.addEventListener('change', function () {
+  var selectedRoomNumber = selectRoomNumber.value;
+  for (var j = 0; j < selectCapacity.length; j++) {
+    if (isRoomNumber123(selectedRoomNumber, selectCapacity[j].value) || isRoomNumber100(selectedRoomNumber, selectCapacity[j].value)) {
+      selectCapacity[j].disabled = false;
+      selectCapacity[j].selected = true;
+    } else {
+      selectCapacity[j].disabled = true;
+    }
+  }
+});
 
   selectType.addEventListener('change', function () {
     var value = selectType.value;
@@ -76,9 +110,6 @@
     selectTimeIn.value = selectTimeOut.value;
   });
 
-  selectRoomNumber.addEventListener('change', selectChangeHandler);
-  selectCapacity.addEventListener('change', selectChangeHandler);
-
   adForm.addEventListener('submit', function (evt) {
     window.backend.upload(new FormData(adForm), formSubmitHandler, window.util.errorHandler);
     evt.preventDefault();
@@ -93,19 +124,6 @@
 
   window.form = {
     adForm: adForm,
-    offerData: OFFER_DATA,
-    /**
-      * Валидация соответствия количества комнат и гостей
-    */
-    validateGuests: function () {
-      var roomValue = selectRoomNumber.value;
-      var capacityValue = selectCapacity.value;
-      var capacityArray = GUESTS_VALIDATE_DATA[roomValue];
-      selectRoomNumber.setCustomValidity('');
-      selectRoomNumber.checkValidity();
-      if (capacityArray.indexOf(capacityValue) < 0) {
-        selectRoomNumber.setCustomValidity('Количество комнат не подходит для количества гостей');
-      }
-    }
+    offerData: OFFER_DATA
   };
 })();
