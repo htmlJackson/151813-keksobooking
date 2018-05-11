@@ -7,14 +7,13 @@
     * Загрузка изображения
     * @param {Object} chooser - инпут загрузки
     * @param {Object} preview - место для показа
-    * @return {Object} - элемент с загруженным изображение
   */
   var uploadImage = function (chooser, preview) {
     var file = chooser.files[0];
     var fileName = file.name.toLowerCase();
 
     var matches = FILE_TYPES.some(function (it) {
-     return fileName.endsWith(it);
+      return fileName.endsWith(it);
     });
 
     if (matches) {
@@ -25,8 +24,6 @@
       });
 
       reader.readAsDataURL(file);
-
-      return preview;
     }
   };
 
@@ -50,7 +47,9 @@
     img.style.objectFit = 'contain';
 
     var photo = photoTemplate.cloneNode(true);
-    photo.appendChild(uploadImage(photosChooser, img));
+
+    uploadImage(photosChooser, img);
+    photo.appendChild(img);
 
     photosContainer.appendChild(photo);
   });
@@ -60,7 +59,7 @@
     clean: function () {
       avatarPreview.src = DEFAULT_AVATAR_SRC;
       Array.from(document.querySelectorAll('.ad-form__photo')).forEach(function (it) {
-       it.remove();
+        it.remove();
       });
     }
   };

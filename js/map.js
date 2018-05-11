@@ -69,6 +69,7 @@
 
   /**
     * Отпускание главного пина
+    @param {Object} evt - объект события
   */
   var mainPinMouseUpHandler = function (evt) {
     evt.preventDefault();
