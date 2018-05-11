@@ -95,17 +95,17 @@
     inputPrice.placeholder = OFFER_DATA[value].minPrice;
   });
 
-  selectTimeIn.addEventListener('change', function() {
+  selectTimeIn.addEventListener('change', function () {
     selectTimeOut.value = selectTimeIn.value;
   });
 
-  selectTimeOut.addEventListener('change', function() {
+  selectTimeOut.addEventListener('change', function () {
     selectTimeIn.value = selectTimeOut.value;
   });
 
   adForm.addEventListener('submit', function (evt) {
-  window.backend.upload(new FormData(adForm), formSubmitHandler, window.util.errorHandler);
-  evt.preventDefault();
+    window.backend.upload(new FormData(adForm), formSubmitHandler, window.util.errorHandler);
+    evt.preventDefault();
   });
 
   adReset.addEventListener('click', function () {
