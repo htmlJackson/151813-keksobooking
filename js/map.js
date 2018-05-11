@@ -43,7 +43,6 @@
     window.backend.load(window.pins.render, window.util.errorHandler);
     setAddress();
     window.filter.init();
-    window.form.validateGuests();
   };
 
   /**
