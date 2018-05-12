@@ -6,7 +6,7 @@
 
   var VerticalMapLimit = {
     MIN: 150,
-    MAX: 700
+    MAX: 500
   };
 
   var mapWidth = document.querySelector('.map').offsetWidth;
